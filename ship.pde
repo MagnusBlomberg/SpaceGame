@@ -1,7 +1,11 @@
 class Ship{
   PVector position = new PVector();
   PVector velocity = new PVector();
-  PVector acceleration = new PVector();
+  PVector acceleration = new PVector();  
+  PVector angularDisplacement = new PVector();
+  PVector angularVelocity = new PVector();
+  PVector angularAcceleration = new PVector();
+  
   PVector wantedPosition = new PVector();
   float direction;
   float health;
@@ -74,6 +78,7 @@ class Ship{
     velocity.mult(0.99);
     velocity.limit(maxSpeed);
     position.add(velocity);
+    
     updateDirection();
     display();
     updateWeapons();

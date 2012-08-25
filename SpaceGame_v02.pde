@@ -2,11 +2,13 @@ import ddf.minim.*; //Sound library
 boolean[] keys = new boolean[526];
 boolean mouseDown;
 Ship ship;
+MySQL SQLConnection = new MySQL("http://www.aldmeris.com/spacegame/test.php");
 ArrayList shots;
 ArrayList explosions;
 ArrayList enemyShips;
 AudioPlayer player;
 Minim minim;
+int counter = 0;
 void setup(){
   minim = new Minim(this);  
   size(800, 600);
@@ -19,23 +21,23 @@ void setup(){
   explosions = new ArrayList();
   enemyShips = new ArrayList();
   enemyShips.add(new Ship(new PVector(300, 100), .02, .02, 0.05, "spaceship2.png", 100));
-/*  enemyShips.add(new Ship(500, 200, .05, .02, 2000, "spaceship2.png", 100));
-  enemyShips.add(new Ship(200, 2000, .05, .02, 1200, "spaceship2.png", 100));
-  enemyShips.add(new Ship(700, 2000, .05, .02, 200, "spaceship2.png", 100));
-  enemyShips.add(new Ship(5000, 200, .05, .02, 5000, "spaceship2.png", 100));
-  enemyShips.add(new Ship(6000, 200, .05, .02, 100, "spaceship2.png", 100));*/
+  enemyShips.add(new Ship(new PVector(500, 200), .05, .02, 2000, "spaceship2.png", 100));
+  enemyShips.add(new Ship(new PVector(200, 2000), .05, .02, 1200, "spaceship2.png", 100));
+  enemyShips.add(new Ship(new PVector(700, 2000), .05, .02, 200, "spaceship2.png", 100));
+  enemyShips.add(new Ship(new PVector(5000, 200), .05, .02, 5000, "spaceship2.png", 100));
+  enemyShips.add(new Ship(new PVector(6000, 200), .05, .02, 100, "spaceship2.png", 100));
   enemyShips.add(new Ship(new PVector(500, 100), .01, .01, 0.01, "mothership.png", 1000));
   for (int i = enemyShips.size() - 1; i >= 0; i--) {
     Ship enemyShip = (Ship) enemyShips.get(i);
     enemyShip.addWeapon("laser", 1, 0, true, false);
   }
-  Ship enemyShip = (Ship) enemyShips.get(1);
+  Ship enemyShip = (Ship) enemyShips.get(6);
   enemyShip.addWeapon("laser", 1, 1, true, false);
   enemyShip.addWeapon("laser", 1, 2, true, false);
   smooth();
 }
 void draw (){
-  background(150);
+  background(0);
   if (!ship.disabled){
     ship.targetMouse();
     ship.wantedPosition.set(mouseX, mouseY, 0);
@@ -136,6 +138,14 @@ void keyPressed(){
       weapon.proximityShots = ship.distancedShots;
     }    
   }
+  
+  if (checkKey(KeyEvent.VK_G)){
+    println(SQLConnection.getVar("counter"));
+  } 
+  if (checkKey(KeyEvent.VK_H)){
+    SQLConnection.updateVar("counter", "" + counter);
+    counter ++;
+  } 
 }
 void keyReleased(){
   keys[keyCode] = false; 
