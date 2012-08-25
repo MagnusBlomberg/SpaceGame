@@ -2,7 +2,7 @@ import ddf.minim.*; //Sound library
 boolean[] keys = new boolean[526];
 boolean mouseDown;
 Ship ship;
-MySQL SQLConnection = new MySQL("http://www.aldmeris.com/spacegame/test.php");
+MySQL SQLConnection = new MySQL("http://www.aldmeris.com/spacegame/sqlprocessor.php");
 ArrayList shots;
 ArrayList explosions;
 ArrayList enemyShips;
@@ -42,6 +42,7 @@ void draw (){
     ship.targetMouse();
     ship.wantedPosition.set(mouseX, mouseY, 0);
     ship.update();
+//    SQLConnection.updateShip(ship);
   }
   displayExplosions();
   updateEnemyShips();
@@ -117,19 +118,10 @@ void keyPressed(){
     PVector tmpVect = new PVector(ship.acc,0);
     tmpVect.rotate(ship.direction);
     ship.acceleration.add(tmpVect);
-    
-    
-
-//    ship.xspeed += ship.acc * cos(ship.direction);
-//    ship.yspeed += ship.acc * sin(ship.direction);
   }
   if (checkKey(KeyEvent.VK_D)){
-//    ship.xspeed += ship.strafeAcc * cos(ship.direction + PI / 2);
- //   ship.yspeed += ship.strafeAcc * sin(ship.direction + PI / 2);
   } 
   if (checkKey(KeyEvent.VK_A)){
-//    ship.xspeed += ship.strafeAcc * cos(ship.direction - PI / 2);
-//    ship.yspeed += ship.strafeAcc * sin(ship.direction - PI / 2);
   } 
   if (key=='c'){
     ship.distancedShots = !ship.distancedShots;
@@ -138,6 +130,10 @@ void keyPressed(){
       weapon.proximityShots = ship.distancedShots;
     }    
   }
+  
+  if (checkKey(KeyEvent.VK_U)){
+    SQLConnection.updateShip(ship);
+  } 
   
   if (checkKey(KeyEvent.VK_G)){
     println(SQLConnection.getVar("counter"));

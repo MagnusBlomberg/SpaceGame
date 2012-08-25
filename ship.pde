@@ -19,8 +19,10 @@ class Ship{
   boolean disabled;
   boolean distancedShots;
   ArrayList weapons;
+  int sqlID;
   
   Ship(PVector newPosition, float newAcc, float newStrafeAcc, float newTurnSpeed, String newShipImage, float newHealth){
+    sqlID = SQLConnection.getNextShipID();
     shipImage = loadImage(newShipImage);
     position = newPosition;
     acc = newAcc;
