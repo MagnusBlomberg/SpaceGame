@@ -5,7 +5,7 @@ class Shot{
   float travelledRange;
   float damage;
   float health;
-  PImage shotImage;
+  PImage shotImage; //hejfas
   boolean shouldBeDestroyed;
   boolean damageShip;
   boolean damageEnemy;
@@ -15,7 +15,7 @@ class Shot{
     velocity = newVelocity;
     range = newRange;
     shotImage = loadImage("laser.png");
-    damage = 20;
+    damage = 10;
     damageShip = newDamageShip;
     damageEnemy = newDamageEnemy;
   }
